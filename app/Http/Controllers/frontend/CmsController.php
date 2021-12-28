@@ -203,28 +203,26 @@ class CmsController extends Controller
             $data = $request->all();
             // dd($data);
             $validator = Validator::make($data, [
-                 'email'        => 'required|email|unique:contact_us',
-                 // 'email'        => 'unique:contact_us,email',
+                 'email'        => 'required|email',
                  'full_name'    => 'required',
                  'phone'        => 'required',
                  'subject'      => 'required',
                  'message'      => 'required',
             ]);
-
+            
             if ($validator->fails()) {
                  $response['status'] = false;
                  $response['message'] = $validator->errors()->first();
-                 Session::flash('error','The email has already been taken.');
+                 Session::flash('error','Something went wrong! Please try again later.');
                  return redirect('/contact-us');
             }
 
-            $allContacts = contactUs::where('email',$data['email'])->first();
-            if ($allContacts) {
-                Session::flash('error','The email has already been taken.');
-                return redirect('/contact-us');
-            }
+            \Mail::send('frontend.emails.contact_us', compact('data'), function ($message) use($data){    
+                $message->from(\Config::get('mail.from.address'));
+                $message->to('ashutoshindiit@gmail.com')->subject($data['subject']." Changarru Contact Us");
+            }); 
 
-            $contactUs                    =  new contactUs;
+            /*$contactUs                    =  new contactUs;
             $contactUs->full_name         =  $data['full_name'];
             $contactUs->email             =  $data['email'];
             $contactUs->phone             =  $data['phone'];
@@ -234,7 +232,8 @@ class CmsController extends Controller
                 return redirect('/contact-us')->with('success','Admin will get back to you soon');
             }else{
                 return redirect()->back()->with('error','Something went wrong, Please try again later.');
-            }
+            }*/
+            return redirect('/contact-us')->with('success','Admin will get back to you soon');
         }
         $homepageInformation = HomepageInformation::first();
 

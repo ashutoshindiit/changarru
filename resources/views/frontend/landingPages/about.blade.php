@@ -28,9 +28,9 @@
                         <li>
                             <a href="index.php">Home</a>
                         </li>
-                        <li>About</li>
+                        <li>Acerca de</li>
                     </ul>
-                    <h1>Who we are</h1>
+                    <h1>Acerca de nosotros</h1>
                 </div>
 			</div>
 		</div>
@@ -50,7 +50,7 @@
             <div class="col-xl-5 col-12">
                 <div class="about-box-layout6">
                     <div class="item-content">
-                        <h2 class="item-title">Our History</h2>
+                        <h2 class="item-title">nuestra historia</h2>
                         {!! @$adminAboutUsInformation['image_description_1'] !!}
                     </div>
                 </div>

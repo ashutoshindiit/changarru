@@ -718,14 +718,14 @@ class ApiController extends Controller
 
     public function editProduct(Request $request,$id)
     {
-        $input = $request->all();
+        $payload = $request->all();
         $validator = Validator::make(
             $request->all(),
             [
                'name'                =>'required',
                'category_id'         =>'required',
                'price'               =>'required',
-               'discounted_price'      =>'required',
+               'discounted_price'    =>'required',
                'quantity'            =>'required',
                'unit_id'             =>'required',
                'description'         =>'required',
@@ -733,7 +733,6 @@ class ApiController extends Controller
                'length'              =>'required',
                'height'              =>'required',
                'width'               =>'required'
-               // 'product_slug'        =>'required'
             ]
         );
 
@@ -746,18 +745,6 @@ class ApiController extends Controller
 
         $sellerInformation  = Auth::guard('api')->user();
 
-
-        $slugGet = SellerProduct::where('name',$input['name'])->first();
-        
-        $slug = str_slug($input['name']);
-        $oldslug = $slug;
-
-        $count = 1;
-        while (SellerProduct::where('product_slug',$slug)->exists()) {
-            $slug = $oldslug.'-'.$count;
-            $count++;   
-        }   
-
         $main_price = '';
         if($payload['discounted_price']){
             $main_price = $payload['discounted_price'];
@@ -767,8 +754,7 @@ class ApiController extends Controller
 
         $sellerProductId = SellerProduct::where('id',$id)
                                 ->update([
-                                   'name'               =>@$payload['name'], 
-                                    'seller_id'          =>@$payload['seller_id'],                    
+                                    'name'               =>@$payload['name'],                    
                                     'category_id'        =>@$payload['category_id'],
                                     'price'              =>@$payload['price'],
                                     'discounted_price'   =>@$payload['discounted_price'],
@@ -780,21 +766,12 @@ class ApiController extends Controller
                                     'height'             =>@$payload['height'],
                                     'width'              =>@$payload['width'],
                                     'description'        =>@$payload['description']
-                        ])->id;      
-
-        if(isset($input['images'])){
-            $allProductColor = SellerProductColor::where('product_id',$id)->get();
-            if($allProductColor){
-                foreach ($allProductColor as $key => $value43) {
-                    if(file_exists('public/frontend/assets/img/product'.'/'.$value43['image']) ) {
-                        unlink('public/frontend/assets/img/product'.'/'.$value43['image']);
-                    }
-                SellerProductColor::where('id',$value43['id'])->delete();
-                }
-            }
-
-            foreach($input['images'] as $key => $value) {
+                        ]);      
+        
+        if($request->has('images') && $request->images){
+            foreach($request->images as $key => $value) {
                 $image = isset($value) && !empty($value) ? $value:'';  
+                $imageThumbnail = isset($value) && !empty($value) ? $value:'';  
                 if(isset($value)){
                     if($image){ 
                       $directory = 'frontend/assets/img/product';
@@ -805,53 +782,68 @@ class ApiController extends Controller
                         }
                     }
                 }
+                $new_file = url('/').'/frontend/assets/img/product/'.$image; 
+                // Thumbnail image
+                if ($new_file) {
+                    $profile = preg_replace('/\..+$/', '', $imageThumbnail->getClientOriginalName()).time().'.'.$imageThumbnail->getClientOriginalExtension();
+                    $img_thmbnail = $this->resizeImage($new_file,$profile);
+                }                
                 SellerImage::create([
-                           'product_id'  => $sellerInformation['id'],                         
-                           'image'       => @$image
+                           'product_id'  => $id,                         
+                           'image'       => @$image,
+                           'thumbnail_image' => @$img_thmbnail
                         ]);      
             }
         }
 
-        if(isset($input['colors'])){
+        if($request->has('colors')){
             SellerProductColor::where('product_id',$id)->delete();
-            foreach($input['colors'] as $key => $value1) {           
-                SellerProductColor::create([
-                       'seller_id'   =>  $sellerInformation['id'],
-                       'product_id'  =>  $sellerProductId, 
-                       'name'        =>  $value1['name'],                         
-                       'color_code'  =>  $value1['color_code']                         
-
-                    ]);      
+            if($request->colors){
+                $colors = json_decode($request->colors,true);
+                foreach($colors as $key => $value1) {           
+                    SellerProductColor::create([
+                           'seller_id'   =>  $sellerInformation['id'],
+                           'product_id'  =>  $id, 
+                           'name'        =>  $value1['name'],                         
+                           'color_code'  =>  $value1['color_code']                         
+                        ]);      
+                }                
             }
         }
 
-        if(isset($input['sizes'])){
+        if($request->has('sizes')){
             SellerProductSize::where('product_id',$id)->delete();
-            foreach($input['sizes'] as $key => $value2) {           
-                SellerProductSize::create([
-                    'seller_id'         =>  $sellerInformation['id'],
-                    'product_id'        =>  $sellerProductId, 
-                    'size'              =>  $value2['size'],                         
-                    'price'             =>  $value2['price'],
-                    'discount_price'    =>  $value2['discount_price']
-
-                ]);      
+            if($request->sizes){
+                $size = json_decode($request->sizes,true);
+                foreach($size as $key => $value2) {         
+                    SellerProductSize::create([
+                        'seller_id'         =>  $sellerInformation['id'],
+                        'product_id'        =>  $id, 
+                        'size'              =>  $value2['size'],                         
+                        'size_price'        =>  $value2['price'],
+                        'discount_price'    =>  $value2['discount_price'],
+                        'quantity'          =>  $value2['quantity']
+                    ]);      
+                }                
             }
         }
 
-        $sellerProductAdded = SellerProduct::with('sellerInfo','sellerProductImages','sellerUnit','sellerCategory','sellerProductSizes','sellerProductColors')
-                                        ->where('seller_id',$sellerInformation['id'])
-                                        ->where('id',$sellerProductId)
-                                        ->first();
-
-        if($sellerProductAdded){
-            return response()->json(['status' => true,'message' => 'Product added','productAdded'=>$sellerProductAdded,'code' => 200]);
-        }else{
-            return response()->json(['status' => false,'message' => 'No Product found', 'code' => 400]);
-        }
+        return response()->json(['status' => true,'message' => 'Product has been updated', 'code' => 200]);
     }
 
-
+    public function deleteProductImage(Request $request, $image_id)
+    {
+        $product_image = SellerImage::findOrFail($image_id);
+        $image = $product_image->image;
+        if($image){
+            if(file_exists('public/frontend/assets/img/product'.'/'.$image) ) {
+                unlink('public/frontend/assets/img/product'.'/'.$image);
+            }            
+        }
+        $product_image->delete();
+        return response()->json(['status' => true,'message' => 'Product image deleted sucessfully', 'code' => 200]);
+    }
+    
     public function deleteProduct(Request $request,$id){
         $sellerProduct = SellerProduct::where('id',$id)->first();
         // print_r($sellerProduct);die();

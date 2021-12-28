@@ -43,7 +43,8 @@ Route::post('/otp_verification', [ApiController::class, 'otp_verification']);
         Route::post('/add-product', [ApiController::class, 'addProduct']);
         Route::post('/edit-product/{product_id}', [ApiController::class, 'editProduct']);
         Route::post('/delete-product/{product_id}', [ApiController::class, 'deleteProduct']);
-
+        Route::delete('/delete-product-image/{attach_id}', [ApiController::class, 'deleteProductImage']); 
+        
         Route::get('/get-all-discount-coupon', [ApiController::class, 'getDiscountCoupon']);
         Route::post('/add-discount-coupon', [ApiController::class, 'addDiscountCoupon']);
         Route::post('/edit-discount-coupon/{discount_coupon_id}', [ApiController::class, 'editDiscountCoupon']);

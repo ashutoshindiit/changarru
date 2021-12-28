@@ -1,12 +1,12 @@
   <footer>
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 
                 <img src="{{asset('public/frontend/landingPage/assets/images/logo-1.png')}}" class="img-fluid" alt="" />
                 <p>{!!@$homepageInformation['footer_description']!!}</p>
             </div>
-            <div class="col-lg-9 col-md-6">
+            <div class="col-lg-8 col-md-6">
                 <!--<h3>Compañía</h3>-->
                 <ul class="footer_page_link">
                     <li> <a href="{{url('/about-us')}}">Acerca de</a></li>
