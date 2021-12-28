@@ -219,7 +219,7 @@ class CmsController extends Controller
 
             \Mail::send('frontend.emails.contact_us', compact('data'), function ($message) use($data){    
                 $message->from(\Config::get('mail.from.address'));
-                $message->to('ashutoshindiit@gmail.com')->subject($data['subject']." Changarru Contact Us");
+                $message->to('contacto@changarru.com.mx')->subject($data['subject']." Changarru Contact Us");
             }); 
 
             /*$contactUs                    =  new contactUs;
