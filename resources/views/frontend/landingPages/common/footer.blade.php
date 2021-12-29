@@ -6,17 +6,21 @@
                 <img src="{{asset('public/frontend/landingPage/assets/images/logo-1.png')}}" class="img-fluid" alt="" />
                 <p>{!!@$homepageInformation['footer_description']!!}</p>
             </div>
-            <div class="col-lg-8 col-md-6">
-                <!--<h3>Compañía</h3>-->
-                <ul class="footer_page_link">
+            <div class="col-lg-4 col-md-6">
+                <h3>Compañía</h3>
+                <ul class="">
                     <li> <a href="{{url('/about-us')}}">Acerca de</a></li>
                     <?php foreach ($pages as $key => $page): ?>
                         <li> <a href="{{url('/page/'.$page->page_name)}}">{{$page['title']}}</a></li>
                     <?php endforeach ?>
                     <li> <a href="{{url('/contact-us')}}">Contacto</a></li>
                     <li> <a href="{{url('/faq')}}">Preguntas frecuentes</a></li>
+                    <li> <a href="{{url('/store-directory')}}">Tienda</a></li>
                 </ul>
             </div>
+            <div class="col-lg-4 col-md-12">
+                <img src="{{asset('public/frontend/landingPage/assets/images/lets-encrypt-seal-secured-ssl-website.png')}}" class="img-fluid" alt="" />
+            </div>            
             <!-- <div class="col-lg-3 col-md-6">
                 <h3>Región</h3>
                 <ul>

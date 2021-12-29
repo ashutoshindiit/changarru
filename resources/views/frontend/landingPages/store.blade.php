@@ -68,7 +68,7 @@
             <div class="col-md-4 col-lg-3">
                 <?php foreach ($sellers as $key => $value): ?>
                 <div class="store-directry-col">
-                    <!-- <a href="{{url('/'.$value['slug'])}}"> -->
+                    <a href="{{url('/'.$value['slug'])}}"> 
                         <div class="store-directry-imgg">
                         <img src="{{$value['store_image']?asset('frontend/assets/img/sellerImage/'.@$value['store_image']):asset('frontend/images/default.jpg')}}">
                     </div>
@@ -77,7 +77,7 @@
                         <p class="title">{{$value['buisness_name']}} </p>
                         <p class="locality">{{$value['store_address']}}</p>
                     </div>
-                    <!-- </a> -->
+                    </a> 
                 </div>
                 <?php endforeach ?>
             </div>

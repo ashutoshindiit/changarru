@@ -20,3 +20,4 @@ yarn-error.log
 *.sql
 /phpmyadmin
 .htaccess
+!/public/frontend/landingPage/assets
