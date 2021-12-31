@@ -268,7 +268,11 @@ class ApiController extends Controller
                                           'slug'                  => str_slug($input['buisness_name']).$sellerInformation['id'],
                                           'buisness_name'         => $input['buisness_name'],
                                           'buisness_category_id'  => $input['buisness_category_id'],
-                                          'verified_status'       => 'verified'
+                                          'verified_status'       => 'verified',
+                                          'zipcode'               => $input['zipcode'],
+                                          'street2'               => $input['street2'],
+                                          'street'                => $input['street'],
+                                          'email'                 => $input['email'],
                                       ]);
 
             return response()->json(['status' => true,'message' => 'Updated Seller buisness information successfully','code' => 200]);
@@ -301,7 +305,11 @@ class ApiController extends Controller
                               'verified_status'       => 'verified',
                               'store_url'             => @$sellerUrl,
                               'store_address'         => @$input['store_address'],
-                              'store_image'           => @$image
+                              'store_image'           => @$image,
+                              'zipcode'               => $input['zipcode'],
+                              'street2'               => $input['street2'],
+                              'street'                => $input['street'],
+                              'email'                 => $input['email'],                              
                           ]);
 
         return response()->json(['status' => true,'message' => 'Seller information updated successfully','code' => 200]);

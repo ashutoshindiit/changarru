@@ -30,7 +30,7 @@ class Seller extends  Authenticatable implements JWTSubject{
 
     protected $table = 'sellers';
     
-    protected $fillable = ['isd_code','mobile_number','buisness_name','buisness_category_id','slug','otp','verified_status','store_view_count','store_image','store_address','store_url'];
+    protected $fillable = ['isd_code','mobile_number','buisness_name','buisness_category_id','slug','otp','verified_status','store_view_count','store_image','store_address','store_url','email','street','street2','zipcode'];
 
     public $timestamps = false;
 
