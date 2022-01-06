@@ -345,7 +345,24 @@
             });
         </script>
 
-    <script type="text/javascript">    
+    <script type="text/javascript">  
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function(event) {
+          if (!event.target.matches('.user-profile-dropdown')) {
+            var dropdowns = document.getElementsByClassName("profile-dropdown");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }    
+        function profileDropdownToggle()
+        {
+            document.getElementById("profile-dropdown").classList.toggle("show");
+        }
         $(document).ready(function(){
             $('#edit_shop').validate({
                 rules: {

@@ -54,9 +54,9 @@ use App\Http\Controllers\FeatureController;
 
 	Route::group(['middleware'=>'GuestAuth'],function(){
 
-		Route::any('/{slug?}', [HomeController::class, 'dashboard']);
+		Route::any('/{slug?}', [HomeController::class, 'dashboard'])->name('shop');
 
-		Route::any('/home/category-wise/product', [HomeController::class, 'getCategoryWiseDetail']);
+		Route::any('/home/category-wise/product', [HomeController::class, 'getCategoryWiseDetail'])->name('category-product');
 
 		Route::any('/{slug}/product-details/{product_slug}', [HomeController::class, 'productDetail']);
 
@@ -147,7 +147,7 @@ use App\Http\Controllers\FeatureController;
 
 		Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 
-			Route::any('/dashboard', [AdminController::class, 'dashboard']);
+			Route::any('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 			// Route::any('/user', [AdminController::class, 'getUser']);
 

@@ -47,30 +47,15 @@
             <div class="col-lg-6">
                <div class="contact-list">
                   <div class="heading-layout5 mg-b-30">
-                     <h2>Information</h2>
-                  </div>
-                
-                  <div class="media">
-                     <div class="item-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                     </div>
-                     <div class="media-body">
-                        <h5 class="item-title">Address</h5>
-                        <ul>
-                           <li>PO Box 16122 Collins Street West</li>
-                           <li>Victoria 8007 Australia</li>
-                        </ul>
-                     </div>
+                     <h2>Email</h2>
                   </div>
                   <div class="media">
                      <div class="item-icon">
                         <i class="far fa-envelope-open"></i>
                      </div>
                      <div class="media-body">
-                        <h5 class="item-title">E-Mail</h5>
                         <ul>
-                           <li>nfo@example.com</li>
-                           <li>test@example.com</li>
+                           <li>contacto@changarru.com.mx</li>
                         </ul>
                      </div>
                   </div>
@@ -79,7 +64,7 @@
             <div class="col-lg-6">
                <div class="contact-form-box-layout1">
                     <div class="heading-layout5 mg-b-30">
-                        <h2>Talk To Us Anytime</h2>
+                        <h2>Contáctanos</h2>
                     </div>
                     <form action="{{url('/contact-us')}}" method="post" id="contact-us-frontend" class="default-form contact-form-box">
                       @csrf 
@@ -105,7 +90,7 @@
 						    <textarea name="message" rows="5" cols="20" class="textarea form-control" required=""  placeholder="Message"></textarea>
                         </div>
                         <div class="col-12 form-group">
-                           <button class="btn btn-info custombtn" type="submit">Submit</button>
+                           <button class="btn btn-info custombtn" type="submit">enviar mensaje</button>
                         </div>
                      </div>
                      <div class="form-response"></div>

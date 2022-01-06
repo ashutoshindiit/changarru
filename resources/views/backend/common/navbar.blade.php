@@ -19,14 +19,14 @@
              $adminDetail = Auth::guard('admin')->user();
          ?>
   
-         <li class="dropdown notification-list topbar-dropdown">
-            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+         <li class="dropdown notification-list topbar-dropdown user-profile-dropdown">
+            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" onclick="profileDropdownToggle()" href="#" role="button" aria-haspopup="false" aria-expanded="false">
             <img  src="{{@$adminDetail['image']?asset('public/backend/assets/images/profile/'.$adminDetail['image']):asset('public/backend/assets/images/default.jpg')}}" alt="user-image" class="rounded-circle">
             <span class="pro-user-name ml-1">
             {{$adminDetail['full_name']}} <i class="mdi mdi-chevron-down"></i> 
             </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+            <div class="dropdown-menu dropdown-menu-right profile-dropdown" id="profile-dropdown">
 
                <a href="{{url('/admin/update-profile')}}" class="dropdown-item notify-item">
                <i class="fe-user"></i>
@@ -42,7 +42,7 @@
       </ul>
       <!-- LOGO -->
       <div class="logo-box">
-         <a href="index.php" class="logo logo-dark text-center">
+         <a href="{{ route('admin.dashboard') }}" class="logo logo-dark text-center">
          <span class="logo-sm logocus">
          <img  src="{{asset('public/backend/assets/images/logo-1.png')}}" alt="">
          </span>
@@ -50,7 +50,7 @@
          <img src="{{asset('public/backend/assets/images/logo.png')}}" alt="">
          </span>
          </a>
-         <a href="index.php" class="logo logo-light text-center">
+         <a href="{{ route('admin.dashboard') }}" class="logo logo-light text-center">
          <span class="logo-sm logocus">
          <img src="{{asset('public/backend/assets/images/logo-s-m.png')}}" alt="">
          </span>

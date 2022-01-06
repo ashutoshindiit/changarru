@@ -201,7 +201,6 @@ class CmsController extends Controller
     public function getContactUs(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
-            // dd($data);
             $validator = Validator::make($data, [
                  'email'        => 'required|email',
                  'full_name'    => 'required',
@@ -221,18 +220,6 @@ class CmsController extends Controller
                 $message->from(\Config::get('mail.from.address'));
                 $message->to('contacto@changarru.com.mx')->subject($data['subject']." Changarru Contact Us");
             }); 
-
-            /*$contactUs                    =  new contactUs;
-            $contactUs->full_name         =  $data['full_name'];
-            $contactUs->email             =  $data['email'];
-            $contactUs->phone             =  $data['phone'];
-            $contactUs->subject           =  $data['subject'];
-            $contactUs->message           =  $data['message'];
-            if($contactUs->save()){
-                return redirect('/contact-us')->with('success','Admin will get back to you soon');
-            }else{
-                return redirect()->back()->with('error','Something went wrong, Please try again later.');
-            }*/
             return redirect('/contact-us')->with('success','Admin will get back to you soon');
         }
         $homepageInformation = HomepageInformation::first();

@@ -63,6 +63,7 @@
                               <td> {{@$value['verified_status']}} </td>
 
                               <td> 
+                                 <a href="{{ route('shop',$value['slug']) }}" target="_blank" class="btn btn-xs btn-success btn-successf"><i class="mdi mdi-shopping"></i></a>
                                  <a href="{{url('admin/sellerManagement/seller/update/'.$value['id'])}}" class="btn btn-xs btn-success btn-successf"><i class="mdi mdi-pencil"></i></a> 
                                  <a href="javascript: void(0);"  data-id="{{$value['id']}}" id="shopIdDelete" class="btn btn-xs btn-danger "><i class="mdi mdi-trash-can"></i></a> 
                               </td>

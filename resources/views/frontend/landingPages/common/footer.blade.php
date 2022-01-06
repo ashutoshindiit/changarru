@@ -79,7 +79,7 @@
                 "debug": false,
                 "newestOnTop": false,
                 "progressBar": true,
-                "positionClass": "toast-top-right",
+                "positionClass": "toast-top-right {{ Session::get('session-class') }}",
                 "preventDuplicates": false,
                 "onclick": null,
                 "showDuration": "300",

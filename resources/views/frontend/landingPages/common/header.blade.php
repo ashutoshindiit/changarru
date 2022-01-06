@@ -36,7 +36,7 @@
               <!--<li class="nav-item"> <a class="nav-link" href="{{url('/blog')}}">Blog</a> </li> -->
               <li class="nav-item"> <a class="nav-link" href="{{url('/faq')}}">Preguntas Frecuentes</a> </li>
             </ul>
-            <a class="btn btn-info custombtn ml-md-auto" href="{{url('/contact-us')}}"><i class="fas fa-phone-alt"></i>Contacto</a>
+            <a class="btn btn-info custombtn ml-md-auto" href="{{url('/contact-us')}}">Contacto</a>
 
             <a class="navbar-toggler crossicon" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
               <i class="far fa-times-circle"></i>
